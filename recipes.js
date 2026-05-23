@@ -1,4 +1,5 @@
-// recipes.js — 18 bilingual recipes (ES/DE)
+// recipes.js — Now 26 bilingual recipes (ES/DE)
+// 18 originals (9 AR + 9 DE) + 8 home recipes (tagged "casa")
 // Each recipe has: macros per serving, scalable ingredients, step-by-step instructions
 // with optional Baly tips. Tip objects: { es, de }.
 
@@ -1301,6 +1302,792 @@ export const RECIPES = [
         "de": "Kalt servieren."
       }
     ]
+  },
+  {
+    "id": "spaghetti-bolognese",
+    "country": "ar",
+    "emoji": "🍝",
+    "time": 60,
+    "kcal": 520,
+    "rating": 4.9,
+    "p": 28,
+    "c": 58,
+    "f": 16,
+    "servings": 4,
+    "tags": [
+      "casa"
+    ],
+    "name": {
+      "es": "Spaghetti bolognese",
+      "de": "Spaghetti Bolognese"
+    },
+    "desc": {
+      "es": "El clásico ragú italiano cocinado a fuego lento. Lo importante no es la receta, es el tiempo: cuanto más reposa la salsa, más rico queda.",
+      "de": "Das klassische italienische Ragù — langsam geschmort. Das Geheimnis ist nicht das Rezept, sondern die Zeit: je länger die Sauce zieht, desto besser."
+    },
+    "ingredients": [
+      {
+        "qty": "400 g",
+        "es": "Spaghetti",
+        "de": "Spaghetti"
+      },
+      {
+        "qty": "500 g",
+        "es": "Carne picada (mitad vaca, mitad cerdo)",
+        "de": "Hackfleisch (halb Rind, halb Schwein)"
+      },
+      {
+        "qty": "1",
+        "es": "Cebolla grande picada",
+        "de": "Große Zwiebel, gehackt"
+      },
+      {
+        "qty": "2",
+        "es": "Zanahorias en cubitos",
+        "de": "Karotten, gewürfelt"
+      },
+      {
+        "qty": "2",
+        "es": "Ramas de apio picadas",
+        "de": "Selleriestangen, gehackt"
+      },
+      {
+        "qty": "2",
+        "es": "Dientes de ajo",
+        "de": "Knoblauchzehen"
+      },
+      {
+        "qty": "800 g",
+        "es": "Tomate triturado",
+        "de": "Passierte Tomaten"
+      },
+      {
+        "qty": "150 ml",
+        "es": "Vino tinto",
+        "de": "Rotwein"
+      },
+      {
+        "qty": "1 cdita",
+        "es": "Orégano, hojas de laurel",
+        "de": "Oregano, Lorbeerblätter"
+      },
+      {
+        "qty": "c/n",
+        "es": "Sal, pimienta, queso parmesano",
+        "de": "Salz, Pfeffer, Parmesan"
+      }
+    ],
+    "steps": [
+      {
+        "es": "En olla pesada, rehogar cebolla, zanahoria y apio 10 min a fuego suave (el famoso 'soffritto').",
+        "de": "In schwerem Topf Zwiebel, Karotte und Sellerie 10 Min. bei mittlerer Hitze anschwitzen (das berühmte 'Soffritto').",
+        "tip": {
+          "es": "Este paso es clave: las verduras tienen que estar tiernas y dulces antes de meter la carne.",
+          "de": "Dieser Schritt ist entscheidend: Das Gemüse muss weich und süß sein, bevor das Fleisch dazu kommt."
+        }
+      },
+      {
+        "es": "Agregar ajo y carne. Romper bien la carne con cuchara y dorar 8-10 min.",
+        "de": "Knoblauch und Hackfleisch dazu. Mit dem Löffel zerkleinern und 8-10 Min. anbraten."
+      },
+      {
+        "es": "Incorporar vino tinto y dejar evaporar el alcohol 3 min.",
+        "de": "Rotwein angießen, 3 Min. einkochen lassen."
+      },
+      {
+        "es": "Sumar tomate, laurel, orégano, sal y pimienta.",
+        "de": "Tomaten, Lorbeer, Oregano, Salz und Pfeffer dazugeben."
+      },
+      {
+        "es": "Tapar y cocinar a fuego mínimo 35-40 min, revolviendo de vez en cuando.",
+        "de": "Zugedeckt 35-40 Min. auf kleinster Stufe köcheln, gelegentlich umrühren.",
+        "tip": {
+          "es": "Si la salsa queda muy seca, agregá un chorrito de agua de la pasta.",
+          "de": "Wenn die Sauce zu trocken wird, etwas Nudelwasser dazugeben."
+        }
+      },
+      {
+        "es": "Hervir los spaghetti al dente (1 min menos que indica el paquete).",
+        "de": "Spaghetti al dente kochen (1 Min. weniger als Packungsangabe)."
+      },
+      {
+        "es": "Mezclar la pasta con la salsa en la olla 1 min. Servir con parmesano.",
+        "de": "Pasta 1 Min. mit der Sauce vermengen. Mit Parmesan servieren."
+      }
+    ]
+  },
+  {
+    "id": "carbonara",
+    "country": "ar",
+    "emoji": "🍝",
+    "time": 25,
+    "kcal": 580,
+    "rating": 4.8,
+    "p": 25,
+    "c": 60,
+    "f": 22,
+    "servings": 4,
+    "tags": [
+      "casa",
+      "quick"
+    ],
+    "name": {
+      "es": "Carbonara auténtica",
+      "de": "Echte Carbonara"
+    },
+    "desc": {
+      "es": "La verdadera receta romana: sin crema, sin cebolla, solo huevos, panceta, pecorino y mucha paciencia. La textura sale de la técnica.",
+      "de": "Das echte römische Rezept: keine Sahne, keine Zwiebel — nur Eier, Pancetta, Pecorino und Geduld. Die Cremigkeit kommt aus der Technik."
+    },
+    "ingredients": [
+      {
+        "qty": "400 g",
+        "es": "Spaghetti o rigatoni",
+        "de": "Spaghetti oder Rigatoni"
+      },
+      {
+        "qty": "200 g",
+        "es": "Panceta o guanciale en bastones",
+        "de": "Pancetta oder Guanciale, in Stäbchen"
+      },
+      {
+        "qty": "4",
+        "es": "Yemas de huevo + 1 huevo entero",
+        "de": "Eigelbe + 1 ganzes Ei"
+      },
+      {
+        "qty": "80 g",
+        "es": "Pecorino rallado fino (o parmesano)",
+        "de": "Pecorino fein gerieben (oder Parmesan)"
+      },
+      {
+        "qty": "c/n",
+        "es": "Pimienta negra molida en el momento",
+        "de": "Frisch gemahlener schwarzer Pfeffer"
+      },
+      {
+        "qty": "c/n",
+        "es": "Sal gruesa",
+        "de": "Grobes Salz"
+      }
+    ],
+    "steps": [
+      {
+        "es": "Poner agua a hervir con bastante sal.",
+        "de": "Reichlich gesalzenes Wasser zum Kochen bringen."
+      },
+      {
+        "es": "En sartén SIN aceite, dorar la panceta a fuego medio hasta que esté crocante (la grasa propia es suficiente).",
+        "de": "Pancetta in Pfanne OHNE Öl bei mittlerer Hitze knusprig braten — das eigene Fett reicht."
+      },
+      {
+        "es": "En un bol, batir yemas + huevo entero + pecorino + mucha pimienta hasta crema espesa.",
+        "de": "In Schüssel Eigelbe + ganzes Ei + Pecorino + viel Pfeffer zu dicker Creme verquirlen."
+      },
+      {
+        "es": "Hervir la pasta al dente. ANTES de colar, reservar 1 taza de agua de cocción.",
+        "de": "Pasta al dente kochen. VOR dem Abgießen 1 Tasse Kochwasser aufbewahren.",
+        "tip": {
+          "es": "El agua de la pasta es ORO — el almidón es lo que liga la salsa.",
+          "de": "Das Nudelwasser ist GOLD — die Stärke bindet die Sauce."
+        }
+      },
+      {
+        "es": "Apagar el fuego de la sartén con la panceta. Tirar la pasta encima y mezclar.",
+        "de": "Hitze unter der Pancetta-Pfanne ausschalten. Pasta dazugeben und mischen."
+      },
+      {
+        "es": "FUERA del fuego, agregar la mezcla de huevos revolviendo rápido. Sumar agua caliente de a poco hasta lograr salsa cremosa.",
+        "de": "AUSSERHALB der Hitze die Eimischung schnell unterrühren. Heißes Nudelwasser nach und nach zugeben, bis cremig.",
+        "tip": {
+          "es": "Si dejás el fuego prendido, los huevos se cocinan y queda revuelto en vez de carbonara. El truco está en el calor RESIDUAL.",
+          "de": "Wenn die Hitze an bleibt, gerinnen die Eier — dann hast du Rührei statt Carbonara. Die Restwärme reicht."
+        }
+      },
+      {
+        "es": "Servir inmediatamente con más pecorino y pimienta arriba.",
+        "de": "Sofort servieren, mit mehr Pecorino und Pfeffer obendrauf."
+      }
+    ]
+  },
+  {
+    "id": "milanesa-napolitana",
+    "country": "ar",
+    "emoji": "🍖",
+    "time": 45,
+    "kcal": 480,
+    "rating": 4.9,
+    "p": 38,
+    "c": 22,
+    "f": 24,
+    "servings": 4,
+    "tags": [
+      "casa",
+      "proteina"
+    ],
+    "name": {
+      "es": "Milanesa napolitana",
+      "de": "Milanesa Napolitana"
+    },
+    "desc": {
+      "es": "La milanesa con jamón, salsa de tomate y mozzarella derretida arriba. El plato más argentino que existe, a pesar del nombre.",
+      "de": "Das Milanesa mit Schinken, Tomatensauce und geschmolzenem Mozzarella obendrauf. Das argentinischste Gericht überhaupt — trotz des Namens."
+    },
+    "ingredients": [
+      {
+        "qty": "4",
+        "es": "Bifes de nalga finos",
+        "de": "Dünne Rindersteaks"
+      },
+      {
+        "qty": "2",
+        "es": "Huevos",
+        "de": "Eier"
+      },
+      {
+        "qty": "1 taza",
+        "es": "Pan rallado",
+        "de": "Paniermehl"
+      },
+      {
+        "qty": "4 fetas",
+        "es": "Jamón cocido",
+        "de": "Gekochter Schinken (4 Scheiben)"
+      },
+      {
+        "qty": "200 g",
+        "es": "Mozzarella en fetas o rallada",
+        "de": "Mozzarella, in Scheiben oder gerieben"
+      },
+      {
+        "qty": "1 taza",
+        "es": "Salsa de tomate casera",
+        "de": "Hausgemachte Tomatensauce"
+      },
+      {
+        "qty": "c/n",
+        "es": "Orégano, ajo, perejil",
+        "de": "Oregano, Knoblauch, Petersilie"
+      },
+      {
+        "qty": "c/n",
+        "es": "Aceite para freír (o spray para horno)",
+        "de": "Bratöl (oder Öl-Spray für den Ofen)"
+      }
+    ],
+    "steps": [
+      {
+        "es": "Pasar los bifes por huevo batido con ajo y perejil, luego por pan rallado. Presionar bien.",
+        "de": "Steaks durch Ei mit Knoblauch und Petersilie ziehen, dann durch Paniermehl. Gut andrücken."
+      },
+      {
+        "es": "Freír las milanesas en aceite caliente 2 min cada lado (o al horno 220°C, 12 min con vuelta).",
+        "de": "In heißem Öl 2 Min. pro Seite braten (oder im Ofen bei 220°C, 12 Min. mit Wenden)."
+      },
+      {
+        "es": "Acomodar las milanesas en una placa.",
+        "de": "Milanesas auf Backblech legen.",
+        "tip": {
+          "es": "Si te quedó muy aceitosa, pasala por papel absorbente antes de gratinar.",
+          "de": "Falls zu fettig, vorher auf Küchenpapier abtropfen."
+        }
+      },
+      {
+        "es": "Cubrir cada una con salsa de tomate, una feta de jamón y mozzarella arriba.",
+        "de": "Jede mit Tomatensauce, einer Scheibe Schinken und Mozzarella belegen."
+      },
+      {
+        "es": "Espolvorear orégano y gratinar al horno 8-10 min hasta que la mozzarella burbujee.",
+        "de": "Mit Oregano bestreuen und 8-10 Min. im Ofen gratinieren, bis der Mozzarella blubbert."
+      },
+      {
+        "es": "Servir con papas al horno o ensalada.",
+        "de": "Mit Ofenkartoffeln oder Salat servieren."
+      }
+    ]
+  },
+  {
+    "id": "tarta-espinaca-sardinas",
+    "country": "ar",
+    "emoji": "🥧",
+    "time": 50,
+    "kcal": 340,
+    "rating": 4.5,
+    "p": 18,
+    "c": 24,
+    "f": 17,
+    "servings": 6,
+    "tags": [
+      "casa"
+    ],
+    "name": {
+      "es": "Tarta de espinaca y sardinas",
+      "de": "Spinat-Sardinen-Tarte"
+    },
+    "desc": {
+      "es": "Una combinación rara pero deliciosa: la espinaca cremosa con el sabor profundo de las sardinas. Plato económico, lleno de omega-3 y hierro.",
+      "de": "Eine ungewöhnliche aber köstliche Kombination: cremiger Spinat trifft auf den intensiven Geschmack der Sardinen. Günstiges Gericht voller Omega-3 und Eisen."
+    },
+    "ingredients": [
+      {
+        "qty": "2",
+        "es": "Tapas de tarta",
+        "de": "Tarteböden"
+      },
+      {
+        "qty": "500 g",
+        "es": "Espinaca fresca (o 300g congelada)",
+        "de": "Frischer Spinat (oder 300g tiefgekühlt)"
+      },
+      {
+        "qty": "2 latas",
+        "es": "Sardinas en aceite (escurridas)",
+        "de": "Sardinen in Öl (abgetropft)"
+      },
+      {
+        "qty": "3",
+        "es": "Huevos",
+        "de": "Eier"
+      },
+      {
+        "qty": "100 ml",
+        "es": "Crema de leche",
+        "de": "Sahne"
+      },
+      {
+        "qty": "1",
+        "es": "Cebolla picada",
+        "de": "Zwiebel, gehackt"
+      },
+      {
+        "qty": "50 g",
+        "es": "Queso rallado",
+        "de": "Geriebener Käse"
+      },
+      {
+        "qty": "c/n",
+        "es": "Nuez moscada, sal, pimienta",
+        "de": "Muskat, Salz, Pfeffer"
+      }
+    ],
+    "steps": [
+      {
+        "es": "Saltear la cebolla 5 min. Agregar la espinaca y cocinar hasta que se reduzca.",
+        "de": "Zwiebel 5 Min. anbraten. Spinat dazu, einkochen lassen."
+      },
+      {
+        "es": "Apretar la espinaca para sacar el agua y picarla.",
+        "de": "Spinat gut ausdrücken und hacken.",
+        "tip": {
+          "es": "Si queda con agua, la tarta se humedece toda. Sacá hasta la última gota.",
+          "de": "Wenn noch Wasser drin ist, wird die Tarte matschig — sehr gut ausdrücken."
+        }
+      },
+      {
+        "es": "Desmenuzar las sardinas con un tenedor (sin las espinas grandes).",
+        "de": "Sardinen mit Gabel zerdrücken (große Gräten entfernen)."
+      },
+      {
+        "es": "Mezclar espinaca, sardinas, huevos, crema, queso, nuez moscada, sal y pimienta.",
+        "de": "Spinat, Sardinen, Eier, Sahne, Käse, Muskat, Salz und Pfeffer vermengen."
+      },
+      {
+        "es": "Forrar molde con una tapa, volcar el relleno y cubrir con la otra. Sellar bordes.",
+        "de": "Form mit einem Teigboden auslegen, Füllung einfüllen, mit zweitem Boden bedecken. Ränder gut verschließen."
+      },
+      {
+        "es": "Pinchar la masa y hornear 30 min a 180°C hasta dorar.",
+        "de": "Teig einstechen und 30 Min. bei 180°C goldbraun backen."
+      }
+    ]
+  },
+  {
+    "id": "pollo-papas-crema",
+    "country": "ar",
+    "emoji": "🍗",
+    "time": 75,
+    "kcal": 520,
+    "rating": 4.8,
+    "p": 35,
+    "c": 32,
+    "f": 24,
+    "servings": 4,
+    "tags": [
+      "casa",
+      "proteina"
+    ],
+    "name": {
+      "es": "Pollo al horno con papas y crema",
+      "de": "Ofenhähnchen mit Kartoffeln und Sahne"
+    },
+    "desc": {
+      "es": "El plato de los domingos en familia. Pollo jugoso, papas que se impregnan del jugo, y la crema que une todo. Una bandeja, todo al horno.",
+      "de": "Das Sonntagsessen für die Familie. Saftiges Hähnchen, Kartoffeln die den Saft aufnehmen, und Sahne die alles verbindet. Eine Form, alles im Ofen."
+    },
+    "ingredients": [
+      {
+        "qty": "1",
+        "es": "Pollo entero trozado (o 8 muslos)",
+        "de": "Ganzes Hähnchen, zerlegt (oder 8 Schenkel)"
+      },
+      {
+        "qty": "6",
+        "es": "Papas medianas en gajos",
+        "de": "Mittlere Kartoffeln, in Spalten"
+      },
+      {
+        "qty": "2",
+        "es": "Cebollas en aros",
+        "de": "Zwiebeln, in Ringen"
+      },
+      {
+        "qty": "200 ml",
+        "es": "Crema de leche",
+        "de": "Sahne"
+      },
+      {
+        "qty": "100 ml",
+        "es": "Vino blanco",
+        "de": "Weißwein"
+      },
+      {
+        "qty": "4",
+        "es": "Dientes de ajo",
+        "de": "Knoblauchzehen"
+      },
+      {
+        "qty": "1 cda",
+        "es": "Mostaza Dijon",
+        "de": "Dijon-Senf"
+      },
+      {
+        "qty": "c/n",
+        "es": "Romero, tomillo, sal, pimienta, oliva",
+        "de": "Rosmarin, Thymian, Salz, Pfeffer, Olivenöl"
+      }
+    ],
+    "steps": [
+      {
+        "es": "Macerar el pollo 30 min con ajo machacado, mostaza, romero, sal, pimienta y un chorro de oliva.",
+        "de": "Hähnchen 30 Min. marinieren mit zerdrücktem Knoblauch, Senf, Rosmarin, Salz, Pfeffer und Olivenöl."
+      },
+      {
+        "es": "En una fuente grande, acomodar las papas y cebollas en la base.",
+        "de": "In große Auflaufform Kartoffeln und Zwiebeln als Boden legen."
+      },
+      {
+        "es": "Colocar el pollo encima con todo el adobo.",
+        "de": "Hähnchen mit der ganzen Marinade darüber legen."
+      },
+      {
+        "es": "Mezclar crema con vino blanco y verter por encima.",
+        "de": "Sahne mit Weißwein verquirlen und darübergießen.",
+        "tip": {
+          "es": "La crema con vino se transforma en una salsa hermosa cuando se cocina con el jugo del pollo.",
+          "de": "Sahne und Wein verwandeln sich mit dem Hähnchensaft in eine wunderbare Sauce."
+        }
+      },
+      {
+        "es": "Horno 200°C, 50-60 min. Tapar con papel aluminio los primeros 30 min para que no se queme la piel.",
+        "de": "Bei 200°C 50-60 Min. backen. Die ersten 30 Min. mit Alufolie abdecken, damit die Haut nicht verbrennt."
+      },
+      {
+        "es": "Destapar los últimos 15 min para que el pollo se dore.",
+        "de": "Die letzten 15 Min. ohne Folie, damit das Hähnchen knusprig wird."
+      },
+      {
+        "es": "Servir con la salsa de la fuente por encima.",
+        "de": "Mit der Sauce aus der Form servieren."
+      }
+    ]
+  },
+  {
+    "id": "salmon-verduras",
+    "country": "ar",
+    "emoji": "🐟",
+    "time": 30,
+    "kcal": 410,
+    "rating": 4.7,
+    "p": 32,
+    "c": 18,
+    "f": 22,
+    "servings": 2,
+    "tags": [
+      "casa",
+      "proteina"
+    ],
+    "name": {
+      "es": "Salmón con verduras al horno",
+      "de": "Lachs mit Ofengemüse"
+    },
+    "desc": {
+      "es": "Rápido, saludable y de pocas calorías. Omega-3 + verduras = una de las mejores cenas posibles. Todo en una bandeja, mínimo lavado.",
+      "de": "Schnell, gesund, kalorienarm. Omega-3 + Gemüse = eines der besten Abendessen. Alles auf einem Blech, minimaler Abwasch."
+    },
+    "ingredients": [
+      {
+        "qty": "2",
+        "es": "Filetes de salmón (180g cada uno)",
+        "de": "Lachsfilets (je 180g)"
+      },
+      {
+        "qty": "1",
+        "es": "Calabacín en rodajas",
+        "de": "Zucchini, in Scheiben"
+      },
+      {
+        "qty": "1",
+        "es": "Morrón rojo en tiras",
+        "de": "Rote Paprika, in Streifen"
+      },
+      {
+        "qty": "200 g",
+        "es": "Tomates cherry",
+        "de": "Kirschtomaten"
+      },
+      {
+        "qty": "1",
+        "es": "Cebolla morada en aros",
+        "de": "Rote Zwiebel, in Ringen"
+      },
+      {
+        "qty": "2",
+        "es": "Dientes de ajo en láminas",
+        "de": "Knoblauchzehen, in Scheiben"
+      },
+      {
+        "qty": "1",
+        "es": "Limón en rodajas",
+        "de": "Zitrone, in Scheiben"
+      },
+      {
+        "qty": "c/n",
+        "es": "Eneldo, oliva, sal, pimienta",
+        "de": "Dill, Olivenöl, Salz, Pfeffer"
+      }
+    ],
+    "steps": [
+      {
+        "es": "Precalentar horno a 200°C.",
+        "de": "Ofen auf 200°C vorheizen."
+      },
+      {
+        "es": "En placa con papel manteca, distribuir todas las verduras con ajo, sal, pimienta y un buen chorro de oliva.",
+        "de": "Auf Backblech mit Backpapier alle Gemüse mit Knoblauch, Salz, Pfeffer und reichlich Olivenöl verteilen."
+      },
+      {
+        "es": "Hornear las verduras 10 min solas.",
+        "de": "Gemüse 10 Min. alleine vorbacken.",
+        "tip": {
+          "es": "Las verduras tardan más que el salmón, por eso van primero.",
+          "de": "Gemüse braucht länger als Lachs — deshalb zuerst."
+        }
+      },
+      {
+        "es": "Sacar, hacer espacio y colocar los filetes de salmón.",
+        "de": "Herausnehmen, Platz schaffen und Lachsfilets darauf legen."
+      },
+      {
+        "es": "Salpimentar el salmón, agregar rodajas de limón y eneldo arriba.",
+        "de": "Lachs würzen, Zitronenscheiben und Dill darauflegen."
+      },
+      {
+        "es": "Horno 12-14 min más, hasta que el salmón se desmenuze fácil con un tenedor.",
+        "de": "Weitere 12-14 Min. backen, bis der Lachs leicht mit der Gabel zerteilt werden kann."
+      },
+      {
+        "es": "Servir directo de la placa.",
+        "de": "Direkt vom Blech servieren."
+      }
+    ]
+  },
+  {
+    "id": "flan-casero",
+    "country": "ar",
+    "emoji": "🍮",
+    "time": 60,
+    "kcal": 220,
+    "rating": 4.9,
+    "p": 7,
+    "c": 32,
+    "f": 7,
+    "servings": 6,
+    "tags": [
+      "casa"
+    ],
+    "name": {
+      "es": "Flan casero con caramelo",
+      "de": "Hausgemachter Flan mit Karamell"
+    },
+    "desc": {
+      "es": "El postre de la abuela. Cremoso, con caramelo amargo en la base. Tres ingredientes y mucha paciencia para que no se corte.",
+      "de": "Das Dessert von Oma. Cremig, mit bitterem Karamell am Boden. Drei Zutaten und viel Geduld, damit es nicht gerinnt."
+    },
+    "ingredients": [
+      {
+        "qty": "6",
+        "es": "Huevos",
+        "de": "Eier"
+      },
+      {
+        "qty": "1 lata",
+        "es": "Leche condensada",
+        "de": "Kondensmilch (1 Dose)"
+      },
+      {
+        "qty": "500 ml",
+        "es": "Leche entera",
+        "de": "Vollmilch"
+      },
+      {
+        "qty": "1 cdita",
+        "es": "Esencia de vainilla",
+        "de": "Vanilleextrakt"
+      },
+      {
+        "qty": "½ taza",
+        "es": "Azúcar (para el caramelo)",
+        "de": "Zucker (für Karamell)"
+      },
+      {
+        "qty": "2 cdas",
+        "es": "Agua (para el caramelo)",
+        "de": "Wasser (für Karamell)"
+      }
+    ],
+    "steps": [
+      {
+        "es": "Caramelo: en olla a fuego medio, derretir el azúcar con el agua sin revolver hasta que tenga color ámbar.",
+        "de": "Karamell: Zucker mit Wasser bei mittlerer Hitze ohne Rühren schmelzen, bis bernsteinfarben.",
+        "tip": {
+          "es": "Mové la olla con la mano, no la cuchara, así no se cristaliza.",
+          "de": "Topf schwenken statt rühren — sonst kristallisiert der Zucker."
+        }
+      },
+      {
+        "es": "Volcar rápido el caramelo en el molde, girando para cubrir base y paredes. Cuidado, está hirviendo.",
+        "de": "Karamell schnell in die Form gießen, drehen für Boden und Wände. Vorsicht, sehr heiß."
+      },
+      {
+        "es": "Batir suavemente los huevos con la leche condensada y la vainilla. NO espumar.",
+        "de": "Eier sanft mit Kondensmilch und Vanille verquirlen. NICHT schaumig schlagen.",
+        "tip": {
+          "es": "Si batís fuerte, te entra aire y quedan agujeritos en el flan.",
+          "de": "Bei starkem Schlagen entstehen Luftblasen, die Löcher im Flan machen."
+        }
+      },
+      {
+        "es": "Incorporar la leche entera mezclando con cuchara, no batidor.",
+        "de": "Vollmilch mit Löffel unterrühren, nicht mit Schneebesen."
+      },
+      {
+        "es": "Colar la mezcla por un tamiz fino para eliminar grumos. Volcar sobre el caramelo.",
+        "de": "Mischung durch feines Sieb gießen, um Klümpchen zu entfernen. Über das Karamell gießen."
+      },
+      {
+        "es": "Cocinar a baño María en horno a 160°C durante 45-50 min. Está listo cuando tiembla apenas en el centro.",
+        "de": "Im Wasserbad bei 160°C 45-50 Min. backen. Fertig, wenn die Mitte nur leicht wackelt."
+      },
+      {
+        "es": "Enfriar a temperatura ambiente y luego MÍNIMO 4 horas en heladera antes de desmoldar.",
+        "de": "Bei Raumtemperatur abkühlen, dann MINDESTENS 4 Std. im Kühlschrank ruhen lassen vor dem Stürzen."
+      }
+    ]
+  },
+  {
+    "id": "tagliatelle-salmone",
+    "country": "ar",
+    "emoji": "🍝",
+    "time": 25,
+    "kcal": 490,
+    "rating": 4.7,
+    "p": 22,
+    "c": 56,
+    "f": 18,
+    "servings": 4,
+    "tags": [
+      "casa",
+      "quick"
+    ],
+    "name": {
+      "es": "Tagliatelle al salmone",
+      "de": "Tagliatelle al Salmone"
+    },
+    "desc": {
+      "es": "El plato de pasta italiano más elegante en 25 minutos. Salmón ahumado, crema, eneldo y limón — pocos ingredientes, mucho sabor.",
+      "de": "Das eleganteste italienische Pastagericht in 25 Minuten. Räucherlachs, Sahne, Dill und Zitrone — wenige Zutaten, viel Geschmack."
+    },
+    "ingredients": [
+      {
+        "qty": "400 g",
+        "es": "Tagliatelle (mejor fresca)",
+        "de": "Tagliatelle (am besten frisch)"
+      },
+      {
+        "qty": "200 g",
+        "es": "Salmón ahumado en tiras",
+        "de": "Räucherlachs, in Streifen"
+      },
+      {
+        "qty": "200 ml",
+        "es": "Crema de leche",
+        "de": "Sahne"
+      },
+      {
+        "qty": "1",
+        "es": "Cebolla pequeña picada",
+        "de": "Kleine Zwiebel, gehackt"
+      },
+      {
+        "qty": "50 ml",
+        "es": "Vodka (opcional pero recomendado)",
+        "de": "Wodka (optional, empfohlen)"
+      },
+      {
+        "qty": "½",
+        "es": "Limón (jugo y ralladura)",
+        "de": "Zitrone (Saft und Schale)"
+      },
+      {
+        "qty": "c/n",
+        "es": "Eneldo fresco, sal, pimienta, manteca",
+        "de": "Frischer Dill, Salz, Pfeffer, Butter"
+      }
+    ],
+    "steps": [
+      {
+        "es": "Poner agua a hervir para la pasta con sal.",
+        "de": "Gesalzenes Wasser für die Pasta aufsetzen."
+      },
+      {
+        "es": "En sartén con una nuez de manteca, rehogar la cebolla a fuego suave hasta que esté translúcida (5 min).",
+        "de": "In Pfanne mit Butter Zwiebel bei mittlerer Hitze glasig dünsten (5 Min.)."
+      },
+      {
+        "es": "Agregar el vodka (si usás) y dejar evaporar 1 min.",
+        "de": "Wodka (falls verwendet) zugeben, 1 Min. einkochen.",
+        "tip": {
+          "es": "El vodka realza el sabor del salmón sin dejar gusto a alcohol.",
+          "de": "Wodka verstärkt den Lachsgeschmack, ohne nach Alkohol zu schmecken."
+        }
+      },
+      {
+        "es": "Sumar la crema y la mitad del salmón. Cocinar 3 min hasta espesar levemente.",
+        "de": "Sahne und die Hälfte des Lachses zugeben. 3 Min. leicht eindicken lassen."
+      },
+      {
+        "es": "Hervir la pasta al dente. Reservar ½ taza de agua antes de colar.",
+        "de": "Pasta al dente kochen. ½ Tasse Kochwasser aufbewahren vor dem Abgießen."
+      },
+      {
+        "es": "Mezclar la pasta con la salsa en la sartén. Agregar el resto del salmón, el jugo y ralladura de limón.",
+        "de": "Pasta in der Pfanne mit der Sauce mischen. Restlichen Lachs, Zitronensaft und -schale zugeben."
+      },
+      {
+        "es": "Si está seca, agregar agua de la pasta de a poco. Terminar con eneldo fresco arriba.",
+        "de": "Falls zu trocken, Nudelwasser schluckweise zugeben. Mit frischem Dill garnieren."
+      }
+    ]
   }
 ];
 
@@ -1329,6 +2116,7 @@ export function scaleQty(qty, ratio) {
 export function recipeMatchesFilter(r, f) {
   if (f === 'all') return true;
   if (f === 'ar' || f === 'de') return r.country === f;
+  if (f === 'casa') return r.tags.includes('casa');
   if (f === 'quick') return r.time <= 20;
   if (f === 'veg') return r.tags.includes('veg');
   if (f === 'low') return r.kcal < 250;

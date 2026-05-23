@@ -312,6 +312,15 @@ function bgForRecipe(r) {
     'spätzle-espinaca':     { backgroundColor: '#D9F99D' },
     'quark-beeren':         { backgroundColor: '#DBEAFE' },
     'rote-grütze':          { backgroundColor: '#DBEAFE' },
+    // Home recipes
+    'spaghetti-bolognese':     { backgroundColor: '#FECDD3' },
+    'carbonara':               { backgroundColor: '#FEF3C7' },
+    'milanesa-napolitana':     { backgroundColor: '#FECDD3' },
+    'tarta-espinaca-sardinas': { backgroundColor: '#D9F99D' },
+    'pollo-papas-crema':       { backgroundColor: '#FED7AA' },
+    'salmon-verduras':         { backgroundColor: '#FEE2E2' },
+    'flan-casero':             { backgroundColor: '#FEF3C7' },
+    'tagliatelle-salmone':     { backgroundColor: '#FECDD3' },
   };
   return palette[r.id] || { backgroundColor: COLORS.green100 };
 }

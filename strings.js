@@ -54,7 +54,7 @@ export const STR = {
     recKicker: 'Cocina con Baly',
     recTitle: 'Recetario completo',
     fAll: 'Todas', fAr: 'Argentinas', fDe: 'Alemanas',
-    fQuick: '⚡ Rápidas', fVeg: '🥗 Veggie', fLow: '🔥 < 250 kcal',
+    fCasa: '🏠 Caseras', fQuick: '⚡ Rápidas', fVeg: '🥗 Veggie', fLow: '🔥 < 250 kcal',
     noRecipes: 'No hay recetas con ese filtro.',
 
     // Recipe detail
@@ -150,7 +150,7 @@ export const STR = {
     recKicker: 'Kochen mit Baly',
     recTitle: 'Vollständiges Rezeptbuch',
     fAll: 'Alle', fAr: 'Argentinisch', fDe: 'Deutsch',
-    fQuick: '⚡ Schnell', fVeg: '🥗 Veggie', fLow: '🔥 < 250 kcal',
+    fCasa: '🏠 Hausgemacht', fQuick: '⚡ Schnell', fVeg: '🥗 Veggie', fLow: '🔥 < 250 kcal',
     noRecipes: 'Keine Rezepte mit diesem Filter.',
 
     detailTitle: 'Rezept',
