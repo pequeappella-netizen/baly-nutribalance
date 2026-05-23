@@ -2,7 +2,8 @@
 // Construye un system prompt con el contexto del usuario (perfil + consumo + log + recetas)
 // y llama a la API de Claude.
 
-import { ANTHROPIC_API_KEY, BALY_MODEL } from './config';
+const ANTHROPIC_API_KEY = process.env.EXPO_PUBLIC_ANTHROPIC_API_KEY || '';
+const BALY_MODEL = process.env.EXPO_PUBLIC_BALY_MODEL || 'claude-haiku-4-5-20251001';
 import { RECIPES, calcGoal } from './recipes';
 
 const ENDPOINT = 'https://api.anthropic.com/v1/messages';
