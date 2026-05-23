@@ -47,6 +47,9 @@ yarn-error.*
 .env.local
 .env*.local
 
+# Baly config — CONTAINS API KEY, NEVER COMMIT
+config.js
+
 # Misc
 *.tsbuildinfo
 coverage/

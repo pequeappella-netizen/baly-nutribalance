@@ -6,16 +6,18 @@ import {
 } from 'react-native';
 import Svg, { Path, Polygon, Line } from 'react-native-svg';
 import { COLORS, FONTS, SHADOWS, RADIUS } from './theme';
+import { askBaly } from './balyAI';
 
 const MASCOTS = { phone: require('./assets/baly-phone.png') };
 
-export default function CoachScreen({ t, lang, onBack }) {
+export default function CoachScreen({ t, lang, state, onBack }) {
   const [bubbles, setBubbles] = useState([
     { from: 'baly', text: t.b1 },
     { from: 'user', text: t.b2 },
     { from: 'baly', text: t.b3 },
   ]);
   const [input, setInput] = useState('');
+  const [isThinking, setIsThinking] = useState(false);
   const scrollRef = useRef(null);
 
   // Reset bubbles whenever lang changes
@@ -27,16 +29,29 @@ export default function CoachScreen({ t, lang, onBack }) {
     ]);
   }, [lang]);
 
-  const send = () => {
+  const send = async () => {
     const text = input.trim();
-    if (!text) return;
+    if (!text || isThinking) return;
+
+    // Add user bubble immediately
+    const currentBubbles = bubbles;
     setBubbles(prev => [...prev, { from: 'user', text }]);
     setInput('');
-    setTimeout(() => {
-      setBubbles(prev => [...prev, { from: 'baly', text: t.balyReply }]);
-      setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 50);
-    }, 700);
+    setIsThinking(true);
     setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 50);
+
+    try {
+      const reply = await askBaly(text, currentBubbles, state, lang);
+      setBubbles(prev => [...prev, { from: 'baly', text: reply }]);
+    } catch (err) {
+      const errMsg = lang === 'es'
+        ? `⚠️ ${err.message}`
+        : `⚠️ ${err.message}`;
+      setBubbles(prev => [...prev, { from: 'baly', text: errMsg, isError: true }]);
+    } finally {
+      setIsThinking(false);
+      setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 80);
+    }
   };
 
   return (
@@ -125,6 +140,14 @@ export default function CoachScreen({ t, lang, onBack }) {
               </Text>
             </View>
           ))}
+          {isThinking && (
+            <View style={[styles.bubble, styles.bubbleBaly, styles.bubbleThinking]}>
+              <Text style={styles.thinkingText}>
+                {lang === 'es' ? 'Baly está escribiendo' : 'Baly schreibt'}
+                <Text style={styles.thinkingDots}> · · ·</Text>
+              </Text>
+            </View>
+          )}
         </View>
 
         <View style={styles.askRow}>
@@ -136,8 +159,13 @@ export default function CoachScreen({ t, lang, onBack }) {
             onChangeText={setInput}
             onSubmitEditing={send}
             returnKeyType="send"
+            editable={!isThinking}
           />
-          <Pressable style={styles.sendBtn} onPress={send}>
+          <Pressable
+            style={[styles.sendBtn, isThinking && { opacity: 0.5 }]}
+            onPress={send}
+            disabled={isThinking}
+          >
             <Svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round">
               <Line x1={22} y1={2} x2={11} y2={13} />
               <Polygon points="22 2 15 22 11 13 2 9 22 2" />
@@ -279,6 +307,20 @@ const styles = StyleSheet.create({
   bubbleText: {
     fontSize: 13.5, lineHeight: 19,
     color: COLORS.ink900,
+  },
+  bubbleThinking: {
+    paddingVertical: 10,
+  },
+  thinkingText: {
+    fontSize: 12.5,
+    fontStyle: 'italic',
+    color: COLORS.ink500,
+    fontWeight: '600',
+  },
+  thinkingDots: {
+    fontSize: 14,
+    fontWeight: '800',
+    color: COLORS.green600,
   },
 
   askRow: {

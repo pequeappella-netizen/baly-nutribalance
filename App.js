@@ -104,6 +104,7 @@ export default function App() {
       screen = (
         <CoachScreen
           t={t} lang={lang}
+          state={state}
           onBack={goBack}
         />
       );
