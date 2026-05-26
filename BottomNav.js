@@ -61,20 +61,19 @@ const TABS = [
   { id: 'perfil',    icon: 'user', labelKey: 'navProfile' },
 ];
 
-export default function BottomNav({ current, onChange, t }) {
+export default function BottomNav({ current, onChange, onAddPress, t }) {
   return (
     <View style={styles.bar} pointerEvents="box-none">
       {TABS.map((tab) => {
         const isCenter = !!tab.center;
         const isActive = current === tab.id;
-        const target = isCenter ? 'recetario' : tab.id;
 
         if (isCenter) {
           return (
             <Pressable
               key={tab.id}
               style={styles.centerBtn}
-              onPress={() => onChange(target)}
+              onPress={() => onAddPress && onAddPress()}
               android_ripple={{ color: 'rgba(255,255,255,0.2)', borderless: false }}
             >
               <Icon name="plus" color="#FFFFFF" size={24} strokeWidth={2.8} />
@@ -86,7 +85,7 @@ export default function BottomNav({ current, onChange, t }) {
           <Pressable
             key={tab.id}
             style={styles.btn}
-            onPress={() => onChange(target)}
+            onPress={() => onChange(tab.id)}
             android_ripple={{ color: 'rgba(20,83,45,0.08)', borderless: true }}
           >
             <Icon

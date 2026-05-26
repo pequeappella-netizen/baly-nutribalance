@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.pequeappella.BalyNutriBalance"
     },
     "android": {
       "adaptiveIcon": {
@@ -26,6 +27,15 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Baly necesita acceso a tus fotos para analizar tu comida.",
+          "cameraPermission": "Baly necesita acceso a tu cámara para sacar fotos de tu comida."
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "c3056f2b-5199-4862-8fa1-be49a937622e"

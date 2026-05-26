@@ -4,11 +4,13 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View, Text, ActivityIndicator, StatusBar, Animated, Easing,
-  SafeAreaView, StyleSheet, Platform,
+  SafeAreaView, StyleSheet, Platform, Alert, Modal, Image,
 } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import { COLORS, FONTS, SHADOWS, RADIUS } from './theme';
 import { STR } from './strings';
 import { useAppState } from './storage';
+import { analyzePhoto } from './balyAI';
 
 import HomeScreen from './HomeScreen';
 import RecetarioScreen from './RecetarioScreen';
@@ -22,6 +24,7 @@ export default function App() {
   const [currentScreen, setCurrentScreen] = useState('home');
   const [currentRecipeId, setCurrentRecipeId] = useState(null);
   const [toastMsg, setToastMsg] = useState('');
+  const [isAnalyzingPhoto, setIsAnalyzingPhoto] = useState(false);
   const toastOpacity = useRef(new Animated.Value(0)).current;
   const toastTimer = useRef(null);
 
@@ -63,6 +66,108 @@ export default function App() {
     setCurrentRecipeId(null);
   }, []);
 
+  // ===== Photo analysis =====
+  const lang = state?.profile?.lang || 'es';
+
+  const processPhoto = useCallback(async (base64, mediaType) => {
+    setIsAnalyzingPhoto(true);
+    try {
+      const result = await analyzePhoto(base64, mediaType, state, lang);
+
+      // Si Baly detectó comida, la registramos
+      if (result.foodsLogged && result.foodsLogged.length > 0) {
+        for (const food of result.foodsLogged) {
+          actions.logFood({
+            id: `photo-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            name: food.name,
+            kcal: food.kcal || 0,
+            p: food.p || 0,
+            c: food.c || 0,
+            f: food.f || 0,
+          });
+        }
+        const total = result.foodsLogged.reduce((sum, f) => sum + (f.kcal || 0), 0);
+        showToast(`📷 +${total} kcal · ${result.foodsLogged.map(f => f.name).join(', ')}`);
+      } else {
+        // Baly no pudo identificar comida — mostramos su explicación
+        Alert.alert(
+          lang === 'es' ? '📷 Baly mira tu foto' : '📷 Baly schaut dein Foto an',
+          result.text || (lang === 'es' ? 'No pude identificar comida en la foto.' : 'Konnte kein Essen erkennen.'),
+        );
+      }
+    } catch (err) {
+      Alert.alert(
+        lang === 'es' ? 'Error analizando la foto' : 'Fehler beim Analysieren',
+        err.message
+      );
+    } finally {
+      setIsAnalyzingPhoto(false);
+    }
+  }, [state, lang, actions]);
+
+  const pickFromCamera = useCallback(async () => {
+    const perm = await ImagePicker.requestCameraPermissionsAsync();
+    if (!perm.granted) {
+      Alert.alert(
+        lang === 'es' ? 'Permiso de cámara' : 'Kamera-Berechtigung',
+        lang === 'es' ? 'Necesito permiso para usar la cámara.' : 'Ich brauche die Erlaubnis für die Kamera.'
+      );
+      return;
+    }
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0.7,
+      base64: true,
+    });
+    if (!result.canceled && result.assets?.[0]?.base64) {
+      const asset = result.assets[0];
+      const mediaType = asset.mimeType || 'image/jpeg';
+      processPhoto(asset.base64, mediaType);
+    }
+  }, [processPhoto, lang]);
+
+  const pickFromLibrary = useCallback(async () => {
+    const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!perm.granted) {
+      Alert.alert(
+        lang === 'es' ? 'Permiso de galería' : 'Galerie-Berechtigung',
+        lang === 'es' ? 'Necesito permiso para acceder a la galería.' : 'Ich brauche die Erlaubnis für die Galerie.'
+      );
+      return;
+    }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0.7,
+      base64: true,
+    });
+    if (!result.canceled && result.assets?.[0]?.base64) {
+      const asset = result.assets[0];
+      const mediaType = asset.mimeType || 'image/jpeg';
+      processPhoto(asset.base64, mediaType);
+    }
+  }, [processPhoto, lang]);
+
+  const handleAddPress = useCallback(() => {
+    Alert.alert(
+      lang === 'es' ? '📷 Foto de comida' : '📷 Foto vom Essen',
+      lang === 'es' ? '¿De dónde la tomamos?' : 'Woher das Foto?',
+      [
+        {
+          text: lang === 'es' ? 'Tomar foto' : 'Foto machen',
+          onPress: pickFromCamera,
+        },
+        {
+          text: lang === 'es' ? 'De la galería' : 'Aus Galerie',
+          onPress: pickFromLibrary,
+        },
+        {
+          text: lang === 'es' ? 'Cancelar' : 'Abbrechen',
+          style: 'cancel',
+        },
+      ]
+    );
+  }, [pickFromCamera, pickFromLibrary, lang]);
+
   // ===== Loading state =====
   if (!state) {
     return (
@@ -74,7 +179,6 @@ export default function App() {
     );
   }
 
-  const lang = state.profile.lang || 'es';
   const t = STR[lang];
 
   // ===== Active screen =====
@@ -105,6 +209,7 @@ export default function App() {
         <CoachScreen
           t={t} lang={lang}
           state={state}
+          actions={actions}
           onBack={goBack}
         />
       );
@@ -149,6 +254,7 @@ export default function App() {
       <BottomNav
         current={activeTab}
         onChange={goTo}
+        onAddPress={handleAddPress}
         t={t}
       />
 
@@ -162,6 +268,26 @@ export default function App() {
       >
         <Text style={styles.toastText}>{toastMsg}</Text>
       </Animated.View>
+
+      {/* Photo analysis overlay */}
+      <Modal
+        visible={isAnalyzingPhoto}
+        transparent
+        animationType="fade"
+        onRequestClose={() => {}}
+      >
+        <View style={styles.photoOverlay}>
+          <View style={styles.photoModal}>
+            <ActivityIndicator size="large" color={COLORS.green600} />
+            <Text style={styles.photoTitle}>
+              {lang === 'es' ? '📷 Baly mira tu plato' : '📷 Baly schaut dein Essen an'}
+            </Text>
+            <Text style={styles.photoSub}>
+              {lang === 'es' ? 'Identificando comida y calculando kcal…' : 'Erkenne Essen und berechne kcal…'}
+            </Text>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -203,5 +329,36 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '700',
     textAlign: 'center',
+  },
+  photoOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(15, 42, 26, 0.78)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 30,
+  },
+  photoModal: {
+    backgroundColor: COLORS.paper,
+    borderRadius: 28,
+    paddingVertical: 32,
+    paddingHorizontal: 28,
+    alignItems: 'center',
+    gap: 16,
+    minWidth: 260,
+    ...SHADOWS.lg,
+  },
+  photoTitle: {
+    fontSize: 17,
+    fontWeight: '700',
+    color: COLORS.ink900,
+    textAlign: 'center',
+    marginTop: 4,
+  },
+  photoSub: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: COLORS.ink500,
+    textAlign: 'center',
+    lineHeight: 18,
   },
 });
