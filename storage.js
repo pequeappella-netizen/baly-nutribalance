@@ -3,8 +3,10 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { calcGoal } from './recipes';
 
 const LS_KEY = '@baly-state-v1';
+const HISTORY_MAX = 30; // keep last 30 days of history
 
 export const DEFAULT_PROFILE = {
   name: 'María Fernández',
@@ -19,11 +21,30 @@ export const DEFAULT_PROFILE = {
 };
 
 function todayStr() {
-  return new Date().toISOString().slice(0, 10);
+  // Use local date (not UTC), so day rollover happens at user's midnight
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
 }
 
 function freshDay() {
   return { kcal: 0, p: 0, c: 0, f: 0, water_ml: 1400 };
+}
+
+function archivePreviousDay(s) {
+  // Only archive if there was actual activity that day
+  if (!s.log || s.log.length === 0) {
+    return s.history || [];
+  }
+  const archived = {
+    date: s.date,
+    log: s.log,
+    consumed: s.consumed,
+    goalKcal: calcGoal(s.profile), // freeze the goal as it was that day
+  };
+  return [archived, ...(s.history || [])].slice(0, HISTORY_MAX);
 }
 
 function recomputeConsumed(log) {
@@ -52,6 +73,7 @@ function seedState() {
     profile: { ...DEFAULT_PROFILE },
     streak: 12,
     log,
+    history: [],
     consumed: recomputeConsumed(log),
   };
 }
@@ -67,15 +89,17 @@ export function useAppState() {
         const raw = await AsyncStorage.getItem(LS_KEY);
         if (raw) {
           const s = JSON.parse(raw);
-          // Reset log if a new day
-          if (s.date !== todayStr()) {
-            s.date = todayStr();
-            s.log = [];
-          }
           // Migrate/fill missing keys
           s.profile = { ...DEFAULT_PROFILE, ...(s.profile || {}) };
           s.log = s.log || [];
           s.streak = s.streak ?? 12;
+          s.history = s.history || [];
+          // Day rollover: archive yesterday into history, reset today
+          if (s.date !== todayStr()) {
+            s.history = archivePreviousDay(s);
+            s.date = todayStr();
+            s.log = [];
+          }
           s.consumed = recomputeConsumed(s.log);
           stateRef.current = s;
           setState(s);
@@ -109,6 +133,7 @@ export function useAppState() {
       {
         ts: Date.now(),
         recipeId: item.id,
+        name: item.name || null,  // For custom foods (e.g. logged by Baly AI)
         kcal: item.kcal || 0,
         p: item.p || 0,
         c: item.c || 0,

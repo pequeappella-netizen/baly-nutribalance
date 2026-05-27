@@ -104,6 +104,37 @@ export default function PerfilScreen({ t, lang, state, actions, onBack, onShowTo
           </View>
         </View>
 
+        {/* Last 7 days history */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>
+            {lang === 'es' ? '📊 Últimos 7 días' : '📊 Letzte 7 Tage'}
+          </Text>
+          {(!state.history || state.history.length === 0) ? (
+            <Text style={styles.historyEmpty}>
+              {lang === 'es'
+                ? 'Tu historial empieza desde mañana. Cada día que uses Baly se va guardando acá.'
+                : 'Deine Historie beginnt ab morgen. Jeder Tag mit Baly wird hier gespeichert.'}
+            </Text>
+          ) : (
+            <View style={styles.historyList}>
+              {state.history.slice(0, 7).map((d) => {
+                const pct = Math.min(100, Math.round((d.consumed.kcal / d.goalKcal) * 100));
+                const over = d.consumed.kcal > d.goalKcal;
+                const barColor = over ? COLORS.coral : pct >= 75 ? COLORS.green600 : COLORS.sun;
+                return (
+                  <View key={d.date} style={styles.historyRow}>
+                    <Text style={styles.historyDate}>{formatDate(d.date, lang)}</Text>
+                    <View style={styles.historyBarWrap}>
+                      <View style={[styles.historyBarFill, { width: `${pct}%`, backgroundColor: barColor }]} />
+                    </View>
+                    <Text style={styles.historyKcal}>{d.consumed.kcal}<Text style={styles.historyGoal}>/{d.goalKcal}</Text></Text>
+                  </View>
+                );
+              })}
+            </View>
+          )}
+        </View>
+
         {/* Physical data */}
         <View style={styles.card}>
           <Text style={styles.cardTitle}>{t.pData}</Text>
@@ -254,6 +285,17 @@ function Stat({ val, lab }) {
       <Text style={styles.statLab}>{lab}</Text>
     </View>
   );
+}
+
+// Format YYYY-MM-DD as a friendly short date in user's language
+function formatDate(isoStr, lang) {
+  const [yyyy, mm, dd] = isoStr.split('-');
+  const day = parseInt(dd, 10);
+  const monthIdx = parseInt(mm, 10) - 1;
+  const monthsEs = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+  const monthsDe = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+  const months = lang === 'de' ? monthsDe : monthsEs;
+  return `${day} ${months[monthIdx]}`;
 }
 
 const styles = StyleSheet.create({
@@ -465,4 +507,46 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   resetText: { color: COLORS.coralDark, fontSize: 13, fontWeight: '700' },
+
+  // History list
+  historyEmpty: {
+    fontSize: 13,
+    color: COLORS.ink500,
+    lineHeight: 18,
+    fontStyle: 'italic',
+  },
+  historyList: { gap: 10 },
+  historyRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  historyDate: {
+    width: 60,
+    fontSize: 12,
+    fontWeight: '700',
+    color: COLORS.ink700,
+  },
+  historyBarWrap: {
+    flex: 1,
+    height: 8,
+    borderRadius: 99,
+    backgroundColor: COLORS.green50,
+    overflow: 'hidden',
+  },
+  historyBarFill: {
+    height: '100%',
+    borderRadius: 99,
+  },
+  historyKcal: {
+    width: 80,
+    textAlign: 'right',
+    fontSize: 12,
+    fontWeight: '800',
+    color: COLORS.ink900,
+  },
+  historyGoal: {
+    fontWeight: '600',
+    color: COLORS.ink500,
+  },
 });

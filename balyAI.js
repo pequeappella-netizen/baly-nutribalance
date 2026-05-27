@@ -72,6 +72,32 @@ function buildSystemPrompt(state, lang) {
         return `- ${name} (${e.kcal} kcal)`;
       }).join('\n');
 
+  // Historial: últimos 7 días (si los hay)
+  const last7 = (state.history || []).slice(0, 7);
+  const historyText = last7.length === 0
+    ? (lang === 'es' ? '(no hay historial todavía — primer día con Baly)' : '(noch keine Historie — erster Tag mit Baly)')
+    : last7.map(d => {
+        const pct = Math.round((d.consumed.kcal / d.goalKcal) * 100);
+        const status = d.consumed.kcal > d.goalKcal
+          ? (lang === 'es' ? 'sobre meta' : 'über Ziel')
+          : pct < 75
+            ? (lang === 'es' ? 'bajo meta' : 'unter Ziel')
+            : (lang === 'es' ? 'en meta' : 'im Ziel');
+        return `- ${d.date}: ${d.consumed.kcal}/${d.goalKcal} kcal (${pct}%, ${status}) · P ${Math.round(d.consumed.p)}g · C ${Math.round(d.consumed.c)}g · F ${Math.round(d.consumed.f)}g`;
+      }).join('\n');
+
+  // Promedios semanales (si hay >= 3 días de historial)
+  let weeklyAvg = '';
+  if (last7.length >= 3) {
+    const avgKcal = Math.round(last7.reduce((s, d) => s + d.consumed.kcal, 0) / last7.length);
+    const avgP = Math.round(last7.reduce((s, d) => s + d.consumed.p, 0) / last7.length);
+    const avgC = Math.round(last7.reduce((s, d) => s + d.consumed.c, 0) / last7.length);
+    const avgF = Math.round(last7.reduce((s, d) => s + d.consumed.f, 0) / last7.length);
+    weeklyAvg = lang === 'es'
+      ? `PROMEDIO ${last7.length} DÍAS: ${avgKcal} kcal/día · ${avgP}g P · ${avgC}g C · ${avgF}g F`
+      : `DURCHSCHNITT ${last7.length} TAGE: ${avgKcal} kcal/Tag · ${avgP}g E · ${avgC}g KH · ${avgF}g F`;
+  }
+
   const recipeList = RECIPES.map(r => {
     const flag = r.country === 'ar' ? '🇦🇷' : '🇩🇪';
     return `- "${r.name[lang]}" — ${r.kcal} kcal · P ${r.p}g · ${flag} · ${r.time}min`;
@@ -137,6 +163,10 @@ HOY:
 LO QUE COMIÓ HOY:
 ${logText}
 
+ÚLTIMOS 7 DÍAS:
+${historyText}
+${weeklyAvg ? '\n' + weeklyAvg : ''}
+
 RECETAS DISPONIBLES EN LA APP (podés recomendarlas):
 ${recipeList}
 
@@ -144,7 +174,8 @@ REGLAS DURAS:
 1. Si recomendás una receta, usá el NOMBRE EXACTO entre comillas dobles.
 2. Si te preguntan "¿qué como?" o similar, analizá macros restantes y sugerí UNA receta concreta.
 3. Si el usuario te avisa que comió algo, USÁ log_food y después confirmá en texto: "Anoté X (Y kcal). Te quedan Z kcal hoy."
-4. Si el usuario se ve angustiado, respondé con empatía primero, números después.`;
+4. Si el usuario se ve angustiado, respondé con empatía primero, números después.
+5. Si te preguntan por patrones ("¿cómo vengo esta semana?", "¿estoy bajo en proteína últimamente?"), USÁ los datos de ÚLTIMOS 7 DÍAS para responder con observaciones concretas (ej: "Llevás 4 días seguidos bajo en proteína, sobre todo viernes y sábado").`;
   }
 
   // German version
@@ -187,6 +218,10 @@ HEUTE:
 HEUTE GEGESSEN:
 ${logText}
 
+LETZTE 7 TAGE:
+${historyText}
+${weeklyAvg ? '\n' + weeklyAvg : ''}
+
 VERFÜGBARE REZEPTE:
 ${recipeList}
 
@@ -194,7 +229,8 @@ REGELN:
 1. Bei Rezeptempfehlungen: EXAKTER Name in Anführungszeichen.
 2. Bei "was soll ich essen?": fehlende Makros analysieren, EIN konkretes Rezept vorschlagen.
 3. Wenn der Nutzer sagt, dass er etwas gegessen hat: NUTZE log_food und bestätige im Text.
-4. Bei emotionalen Themen: Empathie zuerst, Zahlen danach.`;
+4. Bei emotionalen Themen: Empathie zuerst, Zahlen danach.
+5. Bei Fragen nach Mustern ("wie lief meine Woche?", "fehlt mir Protein in letzter Zeit?"), NUTZE die Daten aus LETZTE 7 TAGE für konkrete Beobachtungen (z.B. "Du warst 4 Tage in Folge unter dem Proteinziel, vor allem am Wochenende").`;
 }
 
 // ============================================================
