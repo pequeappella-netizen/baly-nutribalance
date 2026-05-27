@@ -10,7 +10,7 @@ import { askBaly } from './balyAI';
 
 const MASCOTS = { phone: require('./assets/baly-phone.png') };
 
-export default function CoachScreen({ t, lang, state, onBack }) {
+export default function CoachScreen({ t, lang, state, actions, onBack }) {
   const [bubbles, setBubbles] = useState([
     { from: 'baly', text: t.b1 },
     { from: 'user', text: t.b2 },
@@ -41,12 +41,24 @@ export default function CoachScreen({ t, lang, state, onBack }) {
     setTimeout(() => scrollRef.current?.scrollToEnd({ animated: true }), 50);
 
     try {
-      const reply = await askBaly(text, currentBubbles, state, lang);
-      setBubbles(prev => [...prev, { from: 'baly', text: reply }]);
+      const result = await askBaly(text, currentBubbles, state, lang);
+      setBubbles(prev => [...prev, { from: 'baly', text: result.text }]);
+
+      // Si Baly llamó a log_food, registramos cada comida en el contador
+      if (result.foodsLogged && result.foodsLogged.length > 0 && actions?.logFood) {
+        for (const food of result.foodsLogged) {
+          actions.logFood({
+            id: `baly-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            name: food.name,
+            kcal: food.kcal || 0,
+            p: food.p || 0,
+            c: food.c || 0,
+            f: food.f || 0,
+          });
+        }
+      }
     } catch (err) {
-      const errMsg = lang === 'es'
-        ? `⚠️ ${err.message}`
-        : `⚠️ ${err.message}`;
+      const errMsg = `⚠️ ${err.message}`;
       setBubbles(prev => [...prev, { from: 'baly', text: errMsg, isError: true }]);
     } finally {
       setIsThinking(false);
