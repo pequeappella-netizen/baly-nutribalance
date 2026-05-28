@@ -152,6 +152,15 @@ export function useAppState() {
     return removed;
   }, [commit]);
 
+  const removeLogEntry = useCallback((ts) => {
+    const s = stateRef.current;
+    if (!s) return null;
+    const removed = s.log.find(e => e.ts === ts);
+    const newLog = s.log.filter(e => e.ts !== ts);
+    commit({ ...s, log: newLog, consumed: recomputeConsumed(newLog) });
+    return removed;
+  }, [commit]);
+
   const resetDay = useCallback(() => {
     const s = stateRef.current;
     if (!s) return;
@@ -170,6 +179,6 @@ export function useAppState() {
 
   return {
     state,
-    actions: { logFood, undoLast, resetDay, updateProfile, setLang },
+    actions: { logFood, undoLast, removeLogEntry, resetDay, updateProfile, setLang },
   };
 }

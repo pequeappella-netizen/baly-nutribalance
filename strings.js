@@ -29,6 +29,8 @@ export const STR = {
     tryAnother: 'Probá con otro nombre.',
     undoLast: '↶ Deshacer último',
     removed: '↶ Eliminado:',
+    todayMeals: 'Comiste hoy',
+    emptyToday: 'Todavía no registraste nada hoy.',
 
     // Recipe of day
     recDay: 'Receta del día',
@@ -130,6 +132,8 @@ export const STR = {
     tryAnother: 'nicht gefunden. Versuche es anders.',
     undoLast: '↶ Letztes rückgängig',
     removed: '↶ Entfernt:',
+    todayMeals: 'Heute gegessen',
+    emptyToday: 'Du hast heute noch nichts eingetragen.',
 
     recDay: 'Rezept des Tages',
     seeMore: 'mehr',

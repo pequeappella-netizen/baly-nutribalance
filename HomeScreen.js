@@ -55,6 +55,15 @@ export default function HomeScreen({ state, actions, t, lang, onLangChange, onOp
     }
   };
 
+  const handleDelete = (ts) => {
+    const removed = actions.removeLogEntry(ts);
+    if (removed) {
+      const recipe = RECIPES.find(x => x.id === removed.recipeId);
+      const name = recipe ? recipe.name[lang] : (removed.name || '');
+      onShowToast(`${t.removed} ${name}`);
+    }
+  };
+
   return (
     <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollInner}>
       {/* Top bar: greeting + lang toggle */}
@@ -106,12 +115,40 @@ export default function HomeScreen({ state, actions, t, lang, onLangChange, onOp
         </View>
       </View>
 
-      {/* Undo button (visible only when log has entries) */}
+      {/* TODAY'S MEALS — list with individual delete */}
       {state.log.length > 0 && (
-        <View style={styles.undoBar}>
-          <Pressable style={styles.undoBtn} onPress={handleUndo}>
-            <Text style={styles.undoText}>{t.undoLast}</Text>
-          </Pressable>
+        <View style={styles.todaySection}>
+          <View style={styles.todayHead}>
+            <Text style={styles.todayTitle}>{t.todayMeals}</Text>
+            <Pressable onPress={handleUndo}>
+              <Text style={styles.todayUndo}>{t.undoLast}</Text>
+            </Pressable>
+          </View>
+          {[...state.log].reverse().map((entry) => {
+            const recipe = RECIPES.find(r => r.id === entry.recipeId);
+            const name = recipe ? recipe.name[lang] : (entry.name || (lang === 'es' ? 'Comida' : 'Mahlzeit'));
+            const emoji = recipe ? recipe.emoji : '🍽️';
+            return (
+              <View key={entry.ts} style={styles.todayItem}>
+                <View style={styles.todayEmoji}>
+                  <Text style={{ fontSize: 20 }}>{emoji}</Text>
+                </View>
+                <View style={{ flex: 1, minWidth: 0 }}>
+                  <Text style={styles.todayName} numberOfLines={1}>{name}</Text>
+                  <Text style={styles.todayMeta}>
+                    {entry.kcal} kcal · P {Math.round(entry.p)}g · C {Math.round(entry.c)}g · F {Math.round(entry.f)}g
+                  </Text>
+                </View>
+                <Pressable
+                  style={styles.todayDelete}
+                  onPress={() => handleDelete(entry.ts)}
+                  hitSlop={8}
+                >
+                  <Text style={styles.todayDeleteText}>×</Text>
+                </Pressable>
+              </View>
+            );
+          })}
         </View>
       )}
 
@@ -462,15 +499,54 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.92)',
   },
 
-  undoBar: { alignItems: 'center', marginTop: 6, marginBottom: -8 },
-  undoBtn: {
-    paddingHorizontal: 14, paddingVertical: 7,
-    borderRadius: RADIUS.full,
+  // TODAY'S MEALS
+  todaySection: {
+    marginHorizontal: 20,
+    marginTop: 8,
+    marginBottom: 4,
+    backgroundColor: COLORS.paper,
+    borderRadius: RADIUS.lg,
+    padding: 14,
     borderWidth: 1,
-    borderColor: 'rgba(20,83,45,0.10)',
-    backgroundColor: 'transparent',
+    borderColor: 'rgba(20,83,45,0.08)',
+    ...SHADOWS.sm,
   },
-  undoText: { fontSize: 11.5, fontWeight: '700', color: COLORS.ink500 },
+  todayHead: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  todayTitle: { fontSize: 14, fontWeight: '800', color: COLORS.ink900 },
+  todayUndo: { fontSize: 11.5, fontWeight: '700', color: COLORS.ink500 },
+  todayItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    paddingVertical: 8,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(20,83,45,0.06)',
+  },
+  todayEmoji: {
+    width: 38, height: 38,
+    borderRadius: 12,
+    backgroundColor: COLORS.green50,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  todayName: { fontSize: 13.5, fontWeight: '700', color: COLORS.ink900 },
+  todayMeta: { fontSize: 11, color: COLORS.ink500, marginTop: 2 },
+  todayDelete: {
+    width: 30, height: 30,
+    borderRadius: 15,
+    backgroundColor: '#FEE2E2',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  todayDeleteText: {
+    fontSize: 20, fontWeight: '700', color: COLORS.coralDark,
+    lineHeight: 22, marginTop: -2,
+  },
 
   // COACH
   coach: {

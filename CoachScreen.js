@@ -3,6 +3,7 @@
 import React, { useState, useRef } from 'react';
 import {
   View, Text, ScrollView, TextInput, Pressable, Image, StyleSheet,
+  KeyboardAvoidingView, Platform,
 } from 'react-native';
 import Svg, { Path, Polygon, Line } from 'react-native-svg';
 import { COLORS, FONTS, SHADOWS, RADIUS } from './theme';
@@ -67,7 +68,11 @@ export default function CoachScreen({ t, lang, state, actions, onBack }) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 88 : 0}
+    >
       <View style={styles.header}>
         <Pressable style={styles.backBtn} onPress={onBack}>
           <Svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke={COLORS.ink700} strokeWidth={2.4} strokeLinecap="round">
@@ -80,7 +85,12 @@ export default function CoachScreen({ t, lang, state, actions, onBack }) {
         </View>
       </View>
 
-      <ScrollView ref={scrollRef} contentContainerStyle={styles.scrollInner}>
+      <ScrollView
+        ref={scrollRef}
+        style={{ flex: 1 }}
+        contentContainerStyle={styles.scrollInner}
+        keyboardShouldPersistTaps="handled"
+      >
         {/* Greeting */}
         <View style={styles.greeting}>
           <Image source={MASCOTS.phone} style={styles.balyImg} resizeMode="contain" />
@@ -162,32 +172,32 @@ export default function CoachScreen({ t, lang, state, actions, onBack }) {
           )}
         </View>
 
-        <View style={styles.askRow}>
-          <TextInput
-            style={styles.askInput}
-            placeholder={t.askPh}
-            placeholderTextColor={COLORS.ink300}
-            value={input}
-            onChangeText={setInput}
-            onSubmitEditing={send}
-            returnKeyType="send"
-            editable={!isThinking}
-          />
-          <Pressable
-            style={[styles.sendBtn, isThinking && { opacity: 0.5 }]}
-            onPress={send}
-            disabled={isThinking}
-          >
-            <Svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round">
-              <Line x1={22} y1={2} x2={11} y2={13} />
-              <Polygon points="22 2 15 22 11 13 2 9 22 2" />
-            </Svg>
-          </Pressable>
-        </View>
-
-        <View style={{ height: 100 }} />
+        <View style={{ height: 16 }} />
       </ScrollView>
-    </View>
+
+      <View style={styles.askRow}>
+        <TextInput
+          style={styles.askInput}
+          placeholder={t.askPh}
+          placeholderTextColor={COLORS.ink300}
+          value={input}
+          onChangeText={setInput}
+          onSubmitEditing={send}
+          returnKeyType="send"
+          editable={!isThinking}
+        />
+        <Pressable
+          style={[styles.sendBtn, isThinking && { opacity: 0.5 }]}
+          onPress={send}
+          disabled={isThinking}
+        >
+          <Svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round">
+            <Line x1={22} y1={2} x2={11} y2={13} />
+            <Polygon points="22 2 15 22 11 13 2 9 22 2" />
+          </Svg>
+        </Pressable>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -336,7 +346,8 @@ const styles = StyleSheet.create({
   },
 
   askRow: {
-    marginTop: 16,
+    marginHorizontal: 20,
+    marginBottom: 100,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
