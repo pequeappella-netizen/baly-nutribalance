@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { COLORS, FONTS, SHADOWS, RADIUS } from './theme';
+import { computeActiveDays, computeRecipeCount, computeDaysOnTarget } from './stats';
 
 const ACT_VALS = [1.2, 1.55, 1.9];
 const ACT_LABELS = ['low', 'mid', 'high'];
@@ -98,9 +99,9 @@ export default function PerfilScreen({ t, lang, state, actions, onBack, onShowTo
           </View>
 
           <View style={styles.statsGrid}>
-            <Stat val="47" lab={t.sDays} />
-            <Stat val="23" lab={t.sRecipes} />
-            <Stat val="-3.2 kg" lab={t.sProg} />
+            <Stat val={String(computeActiveDays(state))} lab={t.sDays} />
+            <Stat val={String(computeRecipeCount(state))} lab={t.sRecipes} />
+            <Stat val={String(computeDaysOnTarget(state))} lab={t.sOnTarget} />
           </View>
         </View>
 

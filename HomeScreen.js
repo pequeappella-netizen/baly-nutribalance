@@ -7,6 +7,7 @@ import {
 import Svg, { Circle, Path } from 'react-native-svg';
 import { COLORS, FONTS, SHADOWS, RADIUS } from './theme';
 import { RECIPES, calcGoal } from './recipes';
+import { computeStreak } from './stats';
 import CalorieRing from './CalorieRing';
 
 const MASCOTS = {
@@ -23,6 +24,7 @@ export default function HomeScreen({ state, actions, t, lang, onLangChange, onOp
   const profile = state.profile;
   const goal = useMemo(() => calcGoal(profile), [profile]);
   const consumed = state.consumed.kcal;
+  const streak = useMemo(() => computeStreak(state), [state.history]);
 
   // Goals for macros (30/45/25 split, in grams)
   const pGoal = Math.max(1, Math.round((goal * 0.30) / 4));
@@ -48,7 +50,8 @@ export default function HomeScreen({ state, actions, t, lang, onLangChange, onOp
     const removed = actions.undoLast();
     if (removed) {
       const recipe = RECIPES.find(x => x.id === removed.recipeId);
-      onShowToast(`${t.removed} ${recipe ? recipe.name[lang] : ''}`);
+      const name = recipe ? recipe.name[lang] : (removed.name || '');
+      onShowToast(`${t.removed} ${name}`);
     }
   };
 
@@ -88,7 +91,7 @@ export default function HomeScreen({ state, actions, t, lang, onLangChange, onOp
             <Text style={styles.heroTitle}>{t.balance}</Text>
           </View>
           <View style={styles.streak}>
-            <Text style={styles.streakText}>🔥 {state.streak} {t.days}</Text>
+            <Text style={styles.streakText}>🔥 {streak} {t.days}</Text>
           </View>
         </View>
 
@@ -229,8 +232,8 @@ export default function HomeScreen({ state, actions, t, lang, onLangChange, onOp
       {/* ACHIEVEMENT */}
       <View style={styles.achievement}>
         <View style={{ flex: 1, minWidth: 0 }}>
-          <Text style={styles.achTitle}>{t.nailed}</Text>
-          <Text style={styles.achSub}>{t.nailedSub}</Text>
+          <Text style={styles.achTitle}>{achievement(streak, lang).title}</Text>
+          <Text style={styles.achSub}>{achievement(streak, lang).sub}</Text>
         </View>
         <View style={styles.achIcon}>
           <Image source={MASCOTS.heart} style={{ width: 50, height: 50 }} resizeMode="contain" />
@@ -289,6 +292,39 @@ function RecipeRow({ title, ids, lang, onOpen, onSeeMore, seeMoreText }) {
       </View>
     </View>
   );
+}
+
+function achievement(streak, lang) {
+  if (streak >= 7) {
+    return {
+      title: lang === 'es' ? '¡Racha de fuego! 🔥' : 'Feuer-Serie! 🔥',
+      sub: lang === 'es'
+        ? `${streak} días seguidos en tu meta. Baly está orgulloso de vos.`
+        : `${streak} Tage in Folge im Ziel. Baly ist stolz auf dich.`,
+    };
+  }
+  if (streak >= 3) {
+    return {
+      title: lang === 'es' ? '¡Buena racha!' : 'Gute Serie!',
+      sub: lang === 'es'
+        ? `${streak} días seguidos en tu meta. Seguí así.`
+        : `${streak} Tage in Folge im Ziel. Weiter so.`,
+    };
+  }
+  if (streak >= 1) {
+    return {
+      title: lang === 'es' ? '¡Arrancaste!' : 'Du hast angefangen!',
+      sub: lang === 'es'
+        ? `${streak} día en meta. Cada día cuenta.`
+        : `${streak} Tag im Ziel. Jeder Tag zählt.`,
+    };
+  }
+  return {
+    title: lang === 'es' ? 'Empezá tu racha hoy' : 'Starte heute deine Serie',
+    sub: lang === 'es'
+      ? 'Cumplí tu meta hoy y arrancá una racha con Baly.'
+      : 'Erreiche heute dein Ziel und starte eine Serie mit Baly.',
+  };
 }
 
 function bgForRecipe(r) {
